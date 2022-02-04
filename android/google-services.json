@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052833022709",
+    "project_id": "kasir-app-d87b1",
+    "storage_bucket": "kasir-app-d87b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052833022709:android:c07cd1db111af91c0c7bbc",
+        "android_client_info": {
+          "package_name": "in.ryzntx.cashier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052833022709-0s1oa2keg8md6obril88j66b8uhreqkh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJb1F7IWBeUaqtwYVU41ivh1XRB46VDRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052833022709-0s1oa2keg8md6obril88j66b8uhreqkh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
