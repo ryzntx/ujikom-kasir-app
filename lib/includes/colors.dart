@@ -7,7 +7,7 @@ const int backgroundPrimary = 0xfff5f5f5;
 const int colorPrimary = 0xffCE6F46;
 
 final ThemeData myTheme = ThemeData(
-  primarySwatch: MaterialColor(4291718981, {
+  primarySwatch: const MaterialColor(4291718981, {
     50: Color(0xfffaefeb),
     100: Color(0xfff4e0d7),
     200: Color(0xffeac0ae),
@@ -20,14 +20,14 @@ final ThemeData myTheme = ThemeData(
     900: Color(0xff28140b)
   }),
   brightness: Brightness.light,
-  primaryColor: Color(0xffce6f45),
+  primaryColor: const Color(0xffce6f45),
   primaryColorBrightness: Brightness.dark,
-  primaryColorLight: Color(0xfff4e0d7),
-  primaryColorDark: Color(0xff793b20),
-  accentColor: Color(0xffca6335),
+  primaryColorLight: const Color(0xfff4e0d7),
+  primaryColorDark: const Color(0xff793b20),
+  accentColor: const Color(0xffca6335),
   accentColorBrightness: Brightness.dark,
-  canvasColor: Color(0xfffafafa),
-  scaffoldBackgroundColor: Color(0xfffafafa),
+  canvasColor: const Color(0xfffafafa),
+  scaffoldBackgroundColor: const Color(0xfffafafa),
   bottomAppBarColor: Color(0xffffffff),
   cardColor: Color(0xffffffff),
   dividerColor: Color(0x1f000000),

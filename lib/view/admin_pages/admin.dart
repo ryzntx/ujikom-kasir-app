@@ -1,12 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kasir_restoran/includes/colors.dart';
-import 'package:kasir_restoran/view/admin_pages/data/data_meja.dart';
+import 'package:kasir_restoran/view/admin_pages/data/meja/data_meja.dart';
 import 'package:kasir_restoran/view/admin_pages/data/data_menu.dart';
 import 'package:kasir_restoran/view/admin_pages/data/user/data_user.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_activity.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_pendapatan.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_transaksi.dart';
+import 'package:kasir_restoran/view/auth/login.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AdminPages extends StatefulWidget {
@@ -25,7 +26,7 @@ class _AdminPagesState extends State<AdminPages> {
     super.initState();
   }
 
-  Card card(IconData icn, String title, Widget wg) {
+  Card card(IconData icn, String title, String route) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: ElevatedButton(
@@ -37,20 +38,23 @@ class _AdminPagesState extends State<AdminPages> {
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)))),
         onPressed: () {
-          Navigator.push(context,
-              PageTransition(child: wg, type: PageTransitionType.fade));
+          Navigator.of(context).pushNamed(route);
+          // Navigator.push(context,
+          //     PageTransition(child: wg, type: PageTransitionType.fade));
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width / 3.5,
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Icon(icn),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(title),
-            ],
+        child: Center(
+          child: Container(
+            width: 120,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Icon(icn),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(title),
+              ],
+            ),
           ),
         ),
       ),
@@ -60,12 +64,12 @@ class _AdminPagesState extends State<AdminPages> {
   Column textHeader(String title) {
     return Column(
       children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
           title,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -73,21 +77,36 @@ class _AdminPagesState extends State<AdminPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(backgroundPrimary),
+      backgroundColor: const Color(backgroundPrimary),
       // appBar: AppBar(
       //   title: const Text('Beranda Admin'),
       // ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) {
+                      Navigator.of(context).pushReplacement(PageTransition(
+                          child: LoginPages(), type: PageTransitionType.fade));
+                    }).catchError((e) {
+                      print(e);
+                    });
+                  },
+                  icon: Icon(
+                    Icons.logout,
+                    color: Colors.black,
+                  )),
+            ],
             leading: MaterialButton(
               onPressed: () {},
-              child: Icon(Icons.menu),
+              child: const Icon(Icons.menu),
             ),
             pinned: true,
             expandedHeight: 120.0,
             backgroundColor: Colors.white,
-            flexibleSpace: FlexibleSpaceBar(
+            flexibleSpace: const FlexibleSpaceBar(
               title: Text(
                 "Beranda",
                 style: TextStyle(color: Colors.black),
@@ -96,33 +115,46 @@ class _AdminPagesState extends State<AdminPages> {
           ),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
+              Center(
+                //-padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     textHeader("Data Master"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        card(Icons.account_circle_rounded, "Data Admin",
-                            DataUserPages()),
-                        card(Icons.table_view_rounded, "Data Meja",
-                            DataMejaPages()),
-                        card(Icons.fastfood_rounded, "Data Menu",
-                            DataMenuPages()),
-                      ],
+                    SizedBox(
+                      height: 105,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          card(Icons.account_circle_rounded, "Data Admin",
+                              '/data-user'),
+                          card(Icons.table_view_rounded, "Data Meja",
+                              '/data-meja'),
+                          card(Icons.fastfood_rounded, "Data Menu",
+                              '/data-menu'),
+                        ],
+                      ),
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+
+                    //   ],
+                    // ),
                     textHeader("Laporan"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        card(Icons.money, "Transaksi", ReportTransaksiPages()),
-                        card(Icons.monetization_on_rounded, "Pendapatan",
-                            ReportPendapatanPages()),
-                        card(Icons.history, "Aktifitas", ReportActivityPages()),
-                      ],
+                    SizedBox(
+                      height: 105,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          card(Icons.money, "Transaksi", '/laporan-transaksi'),
+                          card(Icons.monetization_on_rounded, "Pendapatan",
+                              '/laporan-pendapatan'),
+                          card(
+                              Icons.history, "Aktifitas", '/laporan-aktifitas'),
+                        ],
+                      ),
                     ),
                   ],
                 ),

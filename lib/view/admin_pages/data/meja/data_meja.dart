@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DataMejaPages extends StatefulWidget {
-  DataMejaPages({Key? key}) : super(key: key);
+  const DataMejaPages({Key? key}) : super(key: key);
 
   @override
   State<DataMejaPages> createState() => _DataMejaPagesState();
@@ -12,10 +12,18 @@ class _DataMejaPagesState extends State<DataMejaPages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data Meja'),
+        title: const Text('Data Meja'),
         centerTitle: true,
       ),
-      body: Container(),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {},
+          label: const Text('TAMBAH DATA'),
+          icon: const Icon(Icons.add)),
+      body: ListView(
+        children: [
+          Text('helo'),
+        ],
+      ),
     );
   }
 }

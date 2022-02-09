@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1052833022709-o25ko676e50sv3cv9rgpbj5uv1u5kpih.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1052833022709-o25ko676e50sv3cv9rgpbj5uv1u5kpih</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAT_ExC3CZQro4mtvkvcqCvZioLRsPk67M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1052833022709</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>in.ryzntx.cashier</string>
+	<key>PROJECT_ID</key>
+	<string>kasir-app-d87b1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kasir-app-d87b1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1052833022709:ios:3d0d3cfbff79f01b0c7bbc</string>
+</dict>
+</plist>
