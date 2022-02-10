@@ -60,7 +60,7 @@ class _DetailUsersPagesState extends State<DetailUsersPages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail User'),
+        title: const Text('Edit User'),
         centerTitle: true,
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.delete))],
       ),
@@ -102,9 +102,11 @@ class _DetailUsersPagesState extends State<DetailUsersPages> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  _collectionReference
-                      .doc(docid)
-                      .update({'displayName': _displayNameController.text});
+                  _collectionReference.doc(docid).update({
+                    'displayName': _displayNameController.text,
+                    'email': _emailController.text,
+                    'role': _roleController.text
+                  });
                 },
                 child: const Text('UPDATE DATA'))
           ],

@@ -21,17 +21,31 @@ class _DataUserPagesState extends State<DataUserPages> {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
+  late Future<QuerySnapshot> usersList = _onRefresh();
+
   //Text Controller
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _roleController = TextEditingController();
   // final TextEditingController _emailController = new TextEditingController();
 
+  var refreshkey = GlobalKey<RefreshIndicatorState>();
+
+  Future<QuerySnapshot> _onRefresh() async {
+    // await Future.delayed(Duration(milliseconds: 10000));
+
+    refreshkey.currentState?.show();
+    final QuerySnapshot data = await db.collection('users').get();
+    return data;
+  }
+
   @override
   void initState() {
     print(auth.currentUser!.uid);
     // TODO: implement initState
     _passwordVisible = false;
+    usersList = _onRefresh();
+
     super.initState();
   }
 
@@ -149,50 +163,58 @@ class _DataUserPagesState extends State<DataUserPages> {
         title: Text('Data User'),
         centerTitle: true,
       ),
-      body: FutureBuilder<dynamic>(
-        future: loadCollection(),
-        builder: (context, snapshot) {
+      body: FutureBuilder(
+        future: usersList,
+        builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              DocumentSnapshot document = snapshot.data!.docs[index];
-              var uid = snapshot.data.docs[index].id;
-              return Card(
-                margin: const EdgeInsets.all(5),
-                child: MaterialButton(
-                  padding: const EdgeInsets.all(15),
-                  onPressed: () {
-                    _showBottomSheet(document, uid);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(document['displayName']),
-                            Text(document['email']),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Hak Akses'),
-                            Text(document.get('role')),
-                          ],
-                        )
-                      ],
+          return RefreshIndicator(
+            key: refreshkey,
+            onRefresh: () async {
+              setState(() {
+                usersList = _onRefresh();
+              });
+            },
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                DocumentSnapshot document = snapshot.data!.docs[index];
+                var uid = snapshot.data.docs[index].id;
+                return Card(
+                  margin: const EdgeInsets.all(5),
+                  child: MaterialButton(
+                    padding: const EdgeInsets.all(15),
+                    onPressed: () {
+                      _showBottomSheet(document, uid);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(document['displayName']),
+                              Text(document['email']),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text('Hak Akses'),
+                              Text(document.get('role')),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-            itemCount: snapshot.data!.docs.length,
+                );
+              },
+              itemCount: snapshot.data!.docs.length,
+            ),
           );
         },
       ),
