@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kasir_restoran/utils/services/firebase_coll_helper.dart';
 import 'package:kasir_restoran/view/admin_pages/data/user/detail_user.dart';
 
 import 'package:material_dialogs/material_dialogs.dart';
@@ -18,8 +19,10 @@ class DataUserPages extends StatefulWidget {
 class _DataUserPagesState extends State<DataUserPages> {
   bool _passwordVisible = true;
 
-  final db = FirebaseFirestore.instance;
-  final auth = FirebaseAuth.instance;
+  // final db = FirebaseFirestore.instance;
+  // final auth = FirebaseAuth.instance;
+
+  final CollectionHelper _collectionHelper = CollectionHelper();
 
   late Future<QuerySnapshot> usersList = _onRefresh();
 
@@ -32,16 +35,15 @@ class _DataUserPagesState extends State<DataUserPages> {
   var refreshkey = GlobalKey<RefreshIndicatorState>();
 
   Future<QuerySnapshot> _onRefresh() async {
-    // await Future.delayed(Duration(milliseconds: 10000));
+    await Future.delayed(Duration(milliseconds: 1000));
 
     refreshkey.currentState?.show();
-    final QuerySnapshot data = await db.collection('users').get();
+    final QuerySnapshot data = await _collectionHelper.loadCollection('users');
     return data;
   }
 
   @override
   void initState() {
-    print(auth.currentUser!.uid);
     // TODO: implement initState
     _passwordVisible = false;
     usersList = _onRefresh();
@@ -134,13 +136,6 @@ class _DataUserPagesState extends State<DataUserPages> {
             );
           });
     }
-  }
-
-  Future loadCollection() async {
-    return await db
-        .collection("users")
-        // .where('uid', isEqualTo: auth.currentUser!.uid)
-        .get();
   }
 
   @override

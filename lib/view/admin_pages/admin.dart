@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kasir_restoran/includes/colors.dart';
 import 'package:kasir_restoran/view/admin_pages/data/meja/data_meja.dart';
-import 'package:kasir_restoran/view/admin_pages/data/data_menu.dart';
+import 'package:kasir_restoran/view/admin_pages/data/menu/data_menu.dart';
 import 'package:kasir_restoran/view/admin_pages/data/user/data_user.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_activity.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_pendapatan.dart';
 import 'package:kasir_restoran/view/admin_pages/reports/report_transaksi.dart';
 import 'package:kasir_restoran/view/auth/login.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AdminPages extends StatefulWidget {
@@ -87,12 +88,30 @@ class _AdminPagesState extends State<AdminPages> {
             actions: [
               IconButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut().then((value) {
-                      Navigator.of(context).pushReplacement(PageTransition(
-                          child: LoginPages(), type: PageTransitionType.fade));
-                    }).catchError((e) {
-                      print(e);
-                    });
+                    Dialogs.materialDialog(
+                      context: context,
+                      title: 'Keluar',
+                      msg: 'Yakin untuk logout?',
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Tidak')),
+                        ElevatedButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut().then((value) {
+                                Navigator.of(context).pushReplacement(
+                                    PageTransition(
+                                        child: LoginPages(),
+                                        type: PageTransitionType.fade));
+                              }).catchError((e) {
+                                print(e);
+                              });
+                            },
+                            child: Text('Ya'))
+                      ],
+                    );
                   },
                   icon: Icon(
                     Icons.logout,

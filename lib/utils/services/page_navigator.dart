@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -17,4 +18,5 @@ void routeNavigatorReplacement(BuildContext ctx, String route) {
 void pageNavigatorReplacement(BuildContext ctx, Widget pages) {
   Navigator.of(ctx).pushReplacement(
       PageTransition(child: pages, type: PageTransitionType.fade));
+
 }

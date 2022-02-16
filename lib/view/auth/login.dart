@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,9 +9,11 @@ import 'package:kasir_restoran/includes/colors.dart';
 import 'package:kasir_restoran/utils/firebase_auth_status.dart';
 import 'package:kasir_restoran/utils/services/firebase_auth_handler.dart';
 import 'package:kasir_restoran/utils/services/firebase_auth_helper.dart';
+import 'package:kasir_restoran/utils/services/firebase_coll_helper.dart';
 import 'package:kasir_restoran/utils/services/page_navigator.dart';
 import 'package:kasir_restoran/view/admin_pages/admin.dart';
 import 'package:kasir_restoran/view/auth/register.dart';
+import 'package:kasir_restoran/view/cashier_pages/cashier.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoginPages extends StatefulWidget {
@@ -30,6 +34,10 @@ class _LoginPagesState extends State<LoginPages> {
   bool _isLoading = false;
 
   late FocusNode _focusNode;
+
+  final CollectionHelper _collectionHelper = CollectionHelper();
+  final auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -203,11 +211,13 @@ class _LoginPagesState extends State<LoginPages> {
       });
       if (status == AuthResultStatus.successful) {
         // Navigate to success screen
-        pageNavigatorReplacement(context, const AdminPages());
-//        Navigator.pushAndRemoveUntil(
-//            context,
-//            MaterialPageRoute(builder: (context) => SuccessScreen()),
-//            (r) => false);
+        QuerySnapshot data = await _collectionHelper.loadCollWhereEqual(
+            'users', 'uid', auth.currentUser?.uid.toString());
+        if (data.docs.first.get('role') == 'admin') {
+          pageNavigatorReplacement(context, const AdminPages());
+        } else {
+          pageNavigatorReplacement(context, const KasirPages());
+        }
       } else {
         final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
         showMsg(errorMsg);
