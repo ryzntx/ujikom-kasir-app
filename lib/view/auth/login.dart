@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,9 +10,7 @@ import 'package:kasir_restoran/utils/services/firebase_auth_handler.dart';
 import 'package:kasir_restoran/utils/services/firebase_auth_helper.dart';
 import 'package:kasir_restoran/utils/services/firebase_coll_helper.dart';
 import 'package:kasir_restoran/utils/services/page_navigator.dart';
-import 'package:kasir_restoran/view/admin_pages/admin.dart';
 import 'package:kasir_restoran/view/auth/register.dart';
-import 'package:kasir_restoran/view/cashier_pages/cashier.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoginPages extends StatefulWidget {
@@ -24,8 +21,8 @@ class LoginPages extends StatefulWidget {
 }
 
 class _LoginPagesState extends State<LoginPages> {
-  final TextEditingController _emailController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -187,7 +184,7 @@ class _LoginPagesState extends State<LoginPages> {
                                 child: const RegisterPages(),
                                 type: PageTransitionType.fade));
                           },
-                          child: Text('Register')),
+                          child: const Text('Register')),
                     ],
                   ),
                 ),
@@ -214,9 +211,9 @@ class _LoginPagesState extends State<LoginPages> {
         QuerySnapshot data = await _collectionHelper.loadCollWhereEqual(
             'users', 'uid', auth.currentUser?.uid.toString());
         if (data.docs.first.get('role') == 'admin') {
-          pageNavigatorReplacement(context, const AdminPages());
+          routeNavigatorReplacement(context, '/admin');
         } else {
-          pageNavigatorReplacement(context, const KasirPages());
+          routeNavigatorRemoveUntil(context, '/kasir');
         }
       } else {
         final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
@@ -230,7 +227,7 @@ class _LoginPagesState extends State<LoginPages> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               'Login Failed',
               style: TextStyle(color: Colors.black),
             ),

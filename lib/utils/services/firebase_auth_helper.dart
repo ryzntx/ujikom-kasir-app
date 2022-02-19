@@ -4,11 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kasir_restoran/utils/firebase_auth_status.dart';
 
 import 'firebase_auth_handler.dart';
-import 'firebase_users_collection.dart';
 
 class FirebaseAuthHelper {
   final _auth = FirebaseAuth.instance;
-  AuthResultStatus? _status = null;
+  AuthResultStatus? _status;
 
   ///
   /// Helper Functions
@@ -40,25 +39,6 @@ class FirebaseAuthHelper {
     try {
       final authResult =
           await _auth.signInWithEmailAndPassword(email: email, password: pass);
-      //     .then((user) {
-      //   FirebaseFirestore.instance
-      //       .collection('users')
-      //       .where('uid', isEqualTo: _auth.currentUser?.uid.toString())
-      //       .get()
-      //       .then((doc) {
-      //     // CollectionReference col = doc.docs.first.
-      //     if (doc.docs.contains('admin')) {
-      //       print('admin');
-      //       // if (doc.docs  .data()['role'] == 'admin') {
-      //       //   print('as admin');
-      //       // } else {
-      //       //   print('as kasir');
-      //       // }
-      //     } else {
-      //       print('kasir');
-      //     }
-      //   });
-      // })
 
       if (authResult.user != null) {
         _status = AuthResultStatus.successful;

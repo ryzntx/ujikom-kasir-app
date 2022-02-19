@@ -3,7 +3,7 @@ import 'package:kasir_restoran/utils/firebase_auth_status.dart';
 class AuthExceptionHandler {
   static handleException(e) {
     // print(e.code);
-    var status;
+    AuthResultStatus status;
     switch (e.code) {
       case "invalid-email":
         status = AuthResultStatus.invalidEmail;

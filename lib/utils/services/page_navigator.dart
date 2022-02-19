@@ -18,5 +18,14 @@ void routeNavigatorReplacement(BuildContext ctx, String route) {
 void pageNavigatorReplacement(BuildContext ctx, Widget pages) {
   Navigator.of(ctx).pushReplacement(
       PageTransition(child: pages, type: PageTransitionType.fade));
+}
 
+void pageNavigatorRemoveUntil(BuildContext ctx, Widget pages) {
+  Navigator.of(ctx).pushAndRemoveUntil(
+      PageTransition(child: pages, type: PageTransitionType.fade),
+      (route) => false);
+}
+
+void routeNavigatorRemoveUntil(BuildContext ctx, String route) {
+  Navigator.of(ctx).pushNamedAndRemoveUntil(route, (route) => false);
 }

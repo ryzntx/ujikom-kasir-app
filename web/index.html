@@ -35,7 +35,7 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script type="module">
+    <script type="module">
     // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
@@ -57,18 +57,18 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-      </script>
+    </script>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDunoUt8NaIAyTIhbHMqKlRjw5Zmri3k9g",
-      authDomain: "kasir-app-d87b1.firebaseapp.com",
-      projectId: "kasir-app-d87b1",
-      storageBucket: "kasir-app-d87b1.appspot.com",
-      messagingSenderId: "1052833022709",
-      appId: "1:1052833022709:web:8696c069e79fa2650c7bbc",
-      measurementId: "G-4B8LQ8VC7F"
-    };
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyDunoUt8NaIAyTIhbHMqKlRjw5Zmri3k9g",
+    //   authDomain: "kasir-app-d87b1.firebaseapp.com",
+    //   projectId: "kasir-app-d87b1",
+    //   storageBucket: "kasir-app-d87b1.appspot.com",
+    //   messagingSenderId: "1052833022709",
+    //   appId: "1:1052833022709:web:8696c069e79fa2650c7bbc",
+    //   measurementId: "G-4B8LQ8VC7F"
+    // };
 
     var serviceWorkerVersion = null;
     var scriptLoaded = false;

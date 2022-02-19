@@ -222,16 +222,16 @@ class _DataUserPagesState extends State<DataUserPages> {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: const Text("NAMA"),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      label: const Text("EMAIL"),
+                    decoration: const InputDecoration(
+                      label: Text("EMAIL"),
                     ),
                   ),
                   const SizedBox(
@@ -255,7 +255,6 @@ class _DataUserPagesState extends State<DataUserPages> {
                           color: Colors.grey,
                         ),
                         onPressed: () {
-                          print(_passwordVisible);
                           setState(
                             () {
                               _passwordVisible = !_passwordVisible;
@@ -265,7 +264,7 @@ class _DataUserPagesState extends State<DataUserPages> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SelectFormField(
@@ -276,17 +275,18 @@ class _DataUserPagesState extends State<DataUserPages> {
                     // onChanged: (val) => print(val),
                     // onSaved: (val) => print(val),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text('TAMBAHKAN!'))
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text('TAMBAHKAN!'))
                 ],
               ),
             ),
           );
         },
         label: const Text("TAMBAH DATA"),
-        icon: Icon(Icons.add),
+        icon: const Icon(Icons.add),
       ),
     );
   }

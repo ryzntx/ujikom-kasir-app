@@ -37,7 +37,6 @@ class _EditMenuPagesState extends State<EditMenuPages> {
     urlPic = widget.picUrl;
     menuNameController.text = widget.menuName;
     menuPriceController.text = widget.menuPrice;
-    print(urlPic);
     super.initState();
   }
 
@@ -45,7 +44,7 @@ class _EditMenuPagesState extends State<EditMenuPages> {
     final PickedFile? pickedFile =
         await _picker.getImage(source: ImageSource.camera);
     setState(() {
-      this._image = File(pickedFile!.path);
+      _image = File(pickedFile!.path);
       print(_image?.path);
     });
   }
@@ -54,7 +53,7 @@ class _EditMenuPagesState extends State<EditMenuPages> {
     final PickedFile? pickedFile =
         await _picker.getImage(source: ImageSource.gallery);
     setState(() {
-      this._image = File(pickedFile!.path);
+      _image = File(pickedFile!.path);
       print(_image?.path);
     });
   }
@@ -84,18 +83,30 @@ class _EditMenuPagesState extends State<EditMenuPages> {
                           spreadRadius: 2,
                           blurRadius: 10,
                           color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 10))
+                          offset: const Offset(0, 10))
                     ],
                     shape: BoxShape.circle,
                   ),
                   child: CircleAvatar(
                     radius: 100,
                     child: ClipOval(
-                      child: new SizedBox(
+                      child: SizedBox(
                         width: 180.0,
                         height: 180.0,
                         child: (_image == null)
-                            ? null
+                            ? Image.network(
+                                urlPic,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress != null) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  return child;
+                                },
+                                fit: BoxFit.cover,
+                              )
                             : Image.file(
                                 _image!,
                                 fit: BoxFit.fill,
@@ -110,40 +121,41 @@ class _EditMenuPagesState extends State<EditMenuPages> {
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     width: 40,
                     child: MaterialButton(
                       color: Colors.primaries[17],
                       textColor: Colors.white,
-                      child: Icon(
+                      child: const Icon(
                         Icons.camera_alt,
                         size: 22,
                       ),
-                      padding: EdgeInsets.all(2),
-                      shape: CircleBorder(),
+                      padding: const EdgeInsets.all(2),
+                      shape: const CircleBorder(),
                       onPressed: () => showModalBottomSheet(
                         context: context,
                         builder: (context) => SingleChildScrollView(
                           controller: ModalScrollController.of(context),
-                          child: Container(
+                          child: SizedBox(
                             height: 200,
                             child: Column(
                               children: <Widget>[
                                 ListTile(
-                                  title: Text("Kamera"),
-                                  subtitle: Text("Ambil foto dari kamera anda"),
-                                  leading: Icon(Icons.camera_alt),
+                                  title: const Text("Kamera"),
+                                  subtitle:
+                                      const Text("Ambil foto dari kamera anda"),
+                                  leading: const Icon(Icons.camera_alt),
                                   onTap: () async {
                                     _pickImageFromCamera();
                                     Navigator.of(context).pop();
                                   },
                                 ),
                                 ListTile(
-                                  title: Text("Galeri"),
-                                  subtitle:
-                                      Text("Ambil foto dari galeri hp anda"),
-                                  leading: Icon(Icons.image_rounded),
+                                  title: const Text("Galeri"),
+                                  subtitle: const Text(
+                                      "Ambil foto dari galeri hp anda"),
+                                  leading: const Icon(Icons.image_rounded),
                                   onTap: () async {
                                     _pickImageFromGallery();
                                     Navigator.of(context).pop();
@@ -159,7 +171,7 @@ class _EditMenuPagesState extends State<EditMenuPages> {
                 ),
               ]),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -186,7 +198,7 @@ class _EditMenuPagesState extends State<EditMenuPages> {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Tambah Menu'),
+              child: const Text('Tambah Menu'),
             ),
           ],
         ),

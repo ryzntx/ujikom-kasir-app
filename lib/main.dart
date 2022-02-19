@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -22,7 +21,6 @@ import 'view/auth/login.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: 'My Cashier App',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   //FirebaseCrashlytics.instance.crash();
@@ -52,6 +50,7 @@ class MyApp extends StatelessWidget {
           FirebaseAuth.instance.currentUser == null ? '/login' : '/admin',
 
       routes: <String, WidgetBuilder>{
+        //"/routes": (context) => PageRoute(),
         "/login": (context) => const LoginPages(),
         "/admin": (context) => const AdminPages(),
         "/kasir": (context) => const KasirPages(),

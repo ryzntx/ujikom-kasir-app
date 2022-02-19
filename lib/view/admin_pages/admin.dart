@@ -1,12 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kasir_restoran/includes/colors.dart';
-import 'package:kasir_restoran/view/admin_pages/data/meja/data_meja.dart';
-import 'package:kasir_restoran/view/admin_pages/data/menu/data_menu.dart';
-import 'package:kasir_restoran/view/admin_pages/data/user/data_user.dart';
-import 'package:kasir_restoran/view/admin_pages/reports/report_activity.dart';
-import 'package:kasir_restoran/view/admin_pages/reports/report_pendapatan.dart';
-import 'package:kasir_restoran/view/admin_pages/reports/report_transaksi.dart';
 import 'package:kasir_restoran/view/auth/login.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:page_transition/page_transition.dart';
@@ -45,7 +39,7 @@ class _AdminPagesState extends State<AdminPages> {
         },
         child: Center(
           child: Container(
-            width: 120,
+            width: MediaQuery.of(context).size.width / 3.3,
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
@@ -97,23 +91,23 @@ class _AdminPagesState extends State<AdminPages> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('Tidak')),
+                            child: const Text('Tidak')),
                         ElevatedButton(
                             onPressed: () {
                               FirebaseAuth.instance.signOut().then((value) {
                                 Navigator.of(context).pushReplacement(
                                     PageTransition(
-                                        child: LoginPages(),
+                                        child: const LoginPages(),
                                         type: PageTransitionType.fade));
                               }).catchError((e) {
                                 print(e);
                               });
                             },
-                            child: Text('Ya'))
+                            child: const Text('Ya'))
                       ],
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.logout,
                     color: Colors.black,
                   )),

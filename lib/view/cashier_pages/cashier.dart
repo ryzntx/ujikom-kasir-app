@@ -50,23 +50,23 @@ class _KasirPagesState extends State<KasirPages>
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('Tidak')),
+                        child: const Text('Tidak')),
                     ElevatedButton(
                         onPressed: () {
                           FirebaseAuth.instance.signOut().then((value) {
                             Navigator.of(context).pushReplacement(
                                 PageTransition(
-                                    child: LoginPages(),
+                                    child: const LoginPages(),
                                     type: PageTransitionType.fade));
                           }).catchError((e) {
                             print(e);
                           });
                         },
-                        child: Text('Ya'))
+                        child: const Text('Ya'))
                   ],
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.logout,
               )),
         ],
@@ -82,7 +82,7 @@ class _KasirPagesState extends State<KasirPages>
               horizontalPadding: 50,
               tabPosition: TabPosition.bottom,
             ),
-            tabs: <Widget>[
+            tabs: const <Widget>[
               Tab(
                 text: 'Menu',
               ),
