@@ -12,16 +12,17 @@ class FirebaseAuthHelper {
   ///
   /// Helper Functions
   ///
-  Future<AuthResultStatus?> createAccount({email, pass, context}) async {
+  Future<AuthResultStatus?> createAccount({name, email, pass, context}) async {
     try {
       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: pass);
       if (authResult.user != null) {
-        FirebaseFirestore.instance.collection('/users').add({
-          'email': authResult.user!.email,
-          'uid': authResult.user!.uid,
-          'role': 'kasir'
-        });
+        authResult.user!.updateDisplayName(name);
+        // FirebaseFirestore.instance.collection('/users').add({
+        //   'email': authResult.user!.email,
+        //   'uid': authResult.user!.uid,
+        //   'role': 'kasir'
+        // });
         _status = AuthResultStatus.successful;
       } else {
         _status = AuthResultStatus.undefined;

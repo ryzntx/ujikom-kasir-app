@@ -16,6 +16,7 @@ class RegisterPages extends StatefulWidget {
 class _RegisterPagesState extends State<RegisterPages> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -43,6 +44,23 @@ class _RegisterPagesState extends State<RegisterPages> {
           key: _formKey,
           child: Column(
             children: [
+              TextFormField(
+                controller: _namaController,
+                validator: (nama) {
+                  if (nama!.isEmpty) {
+                    return 'Harap masukan nama';
+                  }
+                  _namaController.text = nama;
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Nama',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
               TextFormField(
                 validator: (email) {
                   if (email!.isEmpty) {
@@ -118,7 +136,9 @@ class _RegisterPagesState extends State<RegisterPages> {
   _createAccount() async {
     try {
       final status = await FirebaseAuthHelper().createAccount(
-          email: _emailController.text, pass: _passwordController.text);
+          name: _namaController.text,
+          email: _emailController.text,
+          pass: _passwordController.text);
       //   .then((signedInUser) {
       // UserManagement().storeNewUser(signedInUser, context);
       setState(() {
